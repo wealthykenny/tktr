@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TREY KING | Machine Learning Expert</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css"> 
+</head>
+<body>
+
+    <header>
+        <div class="container nav-flex">
+            <div class="logo">USER: <span class="highlight">TREY_KING</span></div>
+            <div style="font-family: var(--font-heading); font-size: 0.5rem; color: var(--retro-gray);">SYS.ADMIN</div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <img 
+                src="https://huggingface.co/spaces/Lordecyhper/stohrage/resolve/main/IMG_8296.jpeg" 
+                alt="Trey King Avatar" 
+                class="pixel-avatar"
+            >
+
+            <h1>
+                <span>PROFESSIONAL PORTFOLIO</span>
+                TREY KING
+            </h1>
+            <div class="typewriter">
+                <span id="typing-text"></span><span class="cursor"></span>
+            </div>
+            
+            <button class="btn-pixel" onclick="scrollToStats()">Initialize Profile</button>
+        </section>
+
+        <section class="stats-section container" id="stats">
+            <div class="rpg-card">
+                <div class="rpg-header">
+                    <h3>Technical Proficiency</h3>
+                    <span style="font-size: 0.9rem; color: var(--retro-gray);">ROLE: MACHINE LEARNING EXPERT</span>
+                </div>
+
+                <div class="stat-grid">
+                    <div class="stat-item">
+                        <label>MACHINE LEARNING & AI <span class="xp-text">PRIMARY</span></label>
+                        <div class="stat-bar-container">
+                            <div class="stat-bar" data-width="92%"></div>
+                        </div>
+                        <p style="font-size: 0.9rem; margin-top: 5px; color:#666;">Neural Networks, NLP, Predictive Modeling</p>
+                    </div>
+
+                    <div class="stat-item">
+                        <label>COMPUTER SCIENCE <span class="xp-text">ACADEMIC</span></label>
+                        <div class="stat-bar-container">
+                            <div class="stat-bar" style="background: var(--neon-purple)" data-width="88%"></div>
+                        </div>
+                        <p style="font-size: 0.9rem; margin-top: 5px; color:#666;">Algorithms, Data Structures, Theory</p>
+                    </div>
+
+                    <div class="stat-item">
+                        <label>SYSTEMS ENGINEERING <span class="xp-text">APPLIED</span></label>
+                        <div class="stat-bar-container">
+                            <div class="stat-bar" style="background: var(--pixel-white)" data-width="75%"></div>
+                        </div>
+                        <p style="font-size: 0.9rem; margin-top: 5px; color:#666;">Python, TensorFlow, Backend Arch.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="interests-section container">
+            <h2 style="margin-bottom: 20px; color: var(--neon-purple);">CORE KNOWLEDGE BASE</h2>
+            <p style="color: var(--retro-gray); max-width: 600px; margin: 0 auto;">
+                Combining advanced computational logic with the humanities to understand the "Why" behind the "How."
+            </p>
+            
+            <div class="badges">
+                <div class="badge">Computer Science</div>
+                <div class="badge">Ancient History</div>
+                <div class="badge">Philosophy of Mind</div>
+                <div class="badge">Epistemology</div>
+                <div class="badge">Data Ethics</div>
+            </div>
+
+            <div style="margin-top: 50px; border-left: 4px solid var(--neon-green); padding-left: 20px; text-align: left; display: inline-block; max-width: 700px;">
+                <p style="font-style: italic; font-size: 1.2rem;">"Those who cannot remember the past are condemned to repeat it—even in code."</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2026 TREY KING</p>
+        <p style="font-size: 0.8rem; margin-top: 10px;">TERMINAL SESSION ACTIVE</p>
+    </footer>
+
+    <script>
+        // --- TYPEWRITER EFFECT ---
+        const textElement = document.getElementById('typing-text');
+        
+        const phrases = [
+            "MACHINE LEARNING EXPERT",
+            "COMPUTER SCIENTIST",
+            "HISTORY BUFF",
+            "PHILOSOPHY ENTHUSIAST"
+        ];
+        
+        let phraseIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let typeSpeed = 80;
+
+        function type() {
+            const currentPhrase = phrases[phraseIndex];
+            
+            if (isDeleting) {
+                textElement.textContent = currentPhrase.substring(0, charIndex - 1);
+                charIndex--;
+                typeSpeed = 40; 
+            } else {
+                textElement.textContent = currentPhrase.substring(0, charIndex + 1);
+                charIndex++;
+                typeSpeed = 80; 
+            }
+
+            if (!isDeleting && charIndex === currentPhrase.length) {
+                isDeleting = true;
+                typeSpeed = 2000; // Wait before deleting
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                phraseIndex = (phraseIndex + 1) % phrases.length;
+                typeSpeed = 500;
+            }
+
+            setTimeout(type, typeSpeed);
+        }
+
+        document.addEventListener('DOMContentLoaded', type);
+
+        // --- ANIMATE STAT BARS ---
+        function animateStats() {
+            const statsSection = document.getElementById('stats');
+            const bars = document.querySelectorAll('.stat-bar');
+            
+            const sectionPos = statsSection.getBoundingClientRect().top;
+            const screenPos = window.innerHeight / 1.3;
+
+            if (sectionPos < screenPos) {
+                bars.forEach(bar => {
+                    const width = bar.getAttribute('data-width');
+                    bar.style.width = width;
+                });
+            }
+        }
+
+        window.addEventListener('scroll', animateStats);
+
+        function scrollToStats() {
+            document.getElementById('stats').scrollIntoView({ 
+                behavior: 'smooth' 
+            });
+        }
+    </script>
+</body>
+</html>
