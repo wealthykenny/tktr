@@ -1,12 +1,18 @@
-/* --- CSS VARIABLES --- */
+/* --- INTEGRATED CSS VARIABLES --- */
 :root {
-    --bg-color: #0d1117; /* Slightly darker, more professional bg */
+    /* Base Retro Colors */
+    --bg-color: #0d1117; 
     --terminal-bg: #161b22;
-    --neon-green: #2ea043; /* Adjusted to a more 'GitHub' enterprise green */
+    --neon-green: #2ea043; 
     --neon-purple: #bc8cff;
     --pixel-white: #c9d1d9;
     --retro-gray: #484f58;
     
+    /* Dynamic Admin Variables (Updated via Netlify Settings) */
+    --primary-color: #3b82f6; 
+    --accent-color: #1e293b;
+
+    /* Fonts */
     --font-heading: 'Press Start 2P', cursive;
     --font-body: 'VT323', monospace;
 }
@@ -20,14 +26,14 @@
 
 body {
     background-color: var(--bg-color);
-    color: var(--pixel-white);
+    color: var(--pixel-white); /* Defaults to retro white */
     font-family: var(--font-body);
     font-size: 20px;
     overflow-x: hidden;
     line-height: 1.6;
 }
 
-/* --- CRT SCANLINE EFFECT (Subtle for professionalism) --- */
+/* --- CRT SCANLINE EFFECT --- */
 body::after {
     content: " ";
     display: block;
@@ -36,7 +42,8 @@ body::after {
     left: 0;
     bottom: 0;
     right: 0;
-    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), 
+                linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
     z-index: 2;
     background-size: 100% 2px, 3px 100%;
     pointer-events: none;
@@ -47,6 +54,7 @@ h1, h2, h3 {
     font-family: var(--font-heading);
     text-transform: uppercase;
     line-height: 1.5;
+    color: var(--primary-color); /* Uses dynamic admin color for headings */
 }
 
 a { text-decoration: none; color: inherit; }
@@ -80,7 +88,20 @@ header {
     letter-spacing: 1px;
 }
 
-/* --- HERO SECTION --- */
+/* --- AVATAR & HERO --- */
+.pixel-avatar, .avatar {
+    width: 160px;
+    height: 160px;
+    object-fit: cover;
+    border: 3px solid var(--primary-color); /* Linked to Admin settings color */
+    box-shadow: 6px 6px 0px var(--neon-purple);
+    margin-bottom: 30px;
+    background-color: var(--terminal-bg);
+    image-rendering: pixelated;
+    /* Merge of .avatar radius logic (set to 0 for pixel look, or 50% for circle) */
+    border-radius: 4px; 
+}
+
 .hero {
     min-height: 90vh;
     padding-top: 40px;
@@ -90,17 +111,6 @@ header {
     flex-direction: column;
     text-align: center;
     position: relative;
-}
-
-.pixel-avatar {
-    width: 160px;
-    height: 160px;
-    object-fit: cover;
-    border: 2px solid var(--pixel-white);
-    box-shadow: 6px 6px 0px var(--neon-purple);
-    margin-bottom: 30px;
-    background-color: var(--terminal-bg);
-    image-rendering: pixelated;
 }
 
 .hero h1 {
@@ -155,15 +165,8 @@ header {
     box-shadow: 4px 4px 0px var(--neon-purple);
 }
 
-.btn-pixel:active {
-    transform: translate(2px, 2px);
-    box-shadow: 2px 2px 0px var(--neon-purple);
-}
-
-/* --- STATS CARD --- */
-.stats-section {
-    padding: 80px 0;
-}
+/* --- STATS SECTION --- */
+.stats-section { padding: 80px 0; }
 
 .rpg-card {
     background: var(--terminal-bg);
@@ -178,23 +181,12 @@ header {
     margin-bottom: 30px;
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
 }
 
 .stat-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 30px;
-}
-
-.stat-item label {
-    display: block;
-    color: var(--pixel-white);
-    font-size: 1.1rem;
-    margin-bottom: 8px;
-    font-family: var(--font-heading);
-    font-size: 0.7rem;
 }
 
 .stat-bar-container {
@@ -206,23 +198,12 @@ header {
 
 .stat-bar {
     height: 100%;
-    background: var(--neon-green);
+    background: var(--neon-green); /* Default bar color */
     width: 0%;
     transition: width 1.5s ease-out;
 }
 
-.xp-text {
-    float: right;
-    font-family: var(--font-body);
-    color: var(--neon-purple);
-}
-
-/* --- INTERESTS --- */
-.interests-section {
-    padding: 60px 0;
-    text-align: center;
-}
-
+/* --- BADGES --- */
 .badges {
     display: flex;
     justify-content: center;
@@ -234,11 +215,7 @@ header {
 .badge {
     background: var(--terminal-bg);
     border: 1px solid var(--neon-purple);
-    color: var(--pixel-white);
     padding: 12px 24px;
-    font-family: var(--font-body);
-    font-size: 1.1rem;
-    cursor: default;
     transition: transform 0.2s;
 }
 
@@ -255,7 +232,6 @@ footer {
     border-top: 1px solid var(--retro-gray);
     margin-top: 60px;
     color: var(--retro-gray);
-    font-size: 1rem;
 }
 
 /* --- ANIMATIONS --- */
@@ -267,5 +243,5 @@ footer {
 /* Responsive Fixes */
 @media (max-width: 768px) {
     .hero h1 { font-size: 1.8rem; }
-    .pixel-avatar { width: 130px; height: 130px; }
+    .pixel-avatar, .avatar { width: 130px; height: 130px; }
 }
