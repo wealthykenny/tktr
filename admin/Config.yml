@@ -1,7 +1,8 @@
 backend:
   name: github
-  repo: wealthykenny/tktr # Your GitHub username/repo
+  repo: wealthykenny/tktr  # Ensure no trailing slash here
   branch: main
+
   
 # This allows you to save "Drafts" before publishing live
 publish_mode: editorial_workflow
