@@ -1,0 +1,7 @@
+{
+  "skills": [
+    { "label": "Java", "value": 85 },
+    { "label": "Web3", "value": 70 },
+    { "label": "Design", "value": 60 }
+  ]
+}
