@@ -19,29 +19,55 @@
     <main>
         <section class="hero">
             <img id="site-avatar" src="https://huggingface.co/spaces/Lordecyhper/stohrage/resolve/main/IMG_8296.jpeg" class="pixel-avatar">
-            <h1><span>PROFESSIONAL PORTFOLIO</span> TR-KING</h1>
+            <h1><span id="hero-heading">PROFESSIONAL PORTFOLIO</span> <span id="hero-subheading">TR-KING</span></h1>
             <div class="typewriter"><span id="typing-text"></span><span class="cursor"></span></div>
             <button class="btn-pixel" onclick="document.getElementById('stats').scrollIntoView({behavior:'smooth'})">Initialize Profile</button>
         </section>
 
         <section class="stats-section container" id="stats">
-            <div class="stat-grid"></div>
+            <div class="rpg-card">
+                <div class="stat-grid" id="stat-container">
+                    </div>
+            </div>
         </section>
     </main>
 
     <script>
-        // REDIRECT SCRIPT: If user logs in from home, send them to admin
-        if (window.netlifyIdentity) {
-            window.netlifyIdentity.on("init", user => {
-                if (!user) {
-                    window.netlifyIdentity.on("login", () => { document.location.href = "/admin/"; });
+        // --- 1. SETTINGS & CONTENT LOADER ---
+        // This fetches your CMS changes for Avatar, Colors, Hero, and Stats
+        async function loadCMSData() {
+            try {
+                // Fetch Settings (Colors/Avatar)
+                const settings = await fetch('/data/settings.json').then(res => res.json());
+                if(settings.avatar) document.getElementById('site-avatar').src = settings.avatar;
+                if(settings.theme_color) document.documentElement.style.setProperty('--primary-color', settings.theme_color);
+                
+                // Fetch Hero Data
+                const hero = await fetch('/data/hero.json').then(res => res.json());
+                if(hero.heading) document.getElementById('hero-heading').textContent = hero.heading;
+                if(hero.sub_heading) document.getElementById('hero-subheading').textContent = hero.sub_heading;
+                if(hero.phrases) phrases = hero.phrases; // Update typewriter
+
+                // Fetch Stats
+                const statsData = await fetch('/data/stats.json').then(res => res.json());
+                const container = document.getElementById('stat-container');
+                if(statsData.skills) {
+                    container.innerHTML = statsData.skills.map(s => `
+                        <div class="stat-item">
+                            <label>${s.label} <span class="xp-text">${s.tag}</span></label>
+                            <div class="stat-bar-container">
+                                <div class="stat-bar" style="width: ${s.percent}%"></div>
+                            </div>
+                            <p style="font-size: 0.9rem; margin-top: 5px; color:#666;">${s.desc}</p>
+                        </div>
+                    `).join('');
                 }
-            });
+            } catch (e) { console.log("CMS data not initialized yet."); }
         }
 
-        // Typewriter Logic
+        // --- 2. TYPEWRITER EFFECT ---
+        let phrases = ["MACHINE LEARNING EXPERT", "SCIENCE ENTHUSIAST"];
         const textElement = document.getElementById('typing-text');
-        const phrases = ["MACHINE LEARNING EXPERT", "SCIENCE ENTHUSIAST"];
         let pIdx = 0, cIdx = 0, isDel = false;
 
         function type() {
@@ -51,7 +77,20 @@
             else if (isDel && cIdx < 0) { isDel = false; pIdx = (pIdx + 1) % phrases.length; setTimeout(type, 500); }
             else { setTimeout(type, isDel ? 50 : 100); }
         }
-        type();
+
+        // --- 3. IDENTITY & INIT ---
+        if (window.netlifyIdentity) {
+            window.netlifyIdentity.on("init", user => {
+                if (!user) {
+                    window.netlifyIdentity.on("login", () => { document.location.href = "/admin/"; });
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadCMSData();
+            type();
+        });
     </script>
 </body>
 </html>
