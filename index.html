@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TR-KING | Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css"> 
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container nav-flex">
+            <div class="logo">USER: <span class="highlight">TR_KING</span></div>
+            <div data-netlify-identity-menu></div> 
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <img id="site-avatar" src="https://huggingface.co/spaces/Lordecyhper/stohrage/resolve/main/IMG_8296.jpeg" class="pixel-avatar">
+            <h1><span>PROFESSIONAL PORTFOLIO</span> TR-KING</h1>
+            <div class="typewriter"><span id="typing-text"></span><span class="cursor"></span></div>
+            <button class="btn-pixel" onclick="document.getElementById('stats').scrollIntoView({behavior:'smooth'})">Initialize Profile</button>
+        </section>
+
+        <section class="stats-section container" id="stats">
+            <div class="stat-grid"></div>
+        </section>
+    </main>
+
+    <script>
+        // REDIRECT SCRIPT: If user logs in from home, send them to admin
+        if (window.netlifyIdentity) {
+            window.netlifyIdentity.on("init", user => {
+                if (!user) {
+                    window.netlifyIdentity.on("login", () => { document.location.href = "/admin/"; });
+                }
+            });
+        }
+
+        // Typewriter Logic
+        const textElement = document.getElementById('typing-text');
+        const phrases = ["MACHINE LEARNING EXPERT", "SCIENCE ENTHUSIAST"];
+        let pIdx = 0, cIdx = 0, isDel = false;
+
+        function type() {
+            const curr = phrases[pIdx];
+            textElement.textContent = isDel ? curr.substring(0, cIdx--) : curr.substring(0, cIdx++);
+            if (!isDel && cIdx > curr.length) { isDel = true; setTimeout(type, 2000); }
+            else if (isDel && cIdx < 0) { isDel = false; pIdx = (pIdx + 1) % phrases.length; setTimeout(type, 500); }
+            else { setTimeout(type, isDel ? 50 : 100); }
+        }
+        type();
+    </script>
+</body>
+</html>
