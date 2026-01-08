@@ -14,30 +14,16 @@ collections:
       - name: "hero"
         label: "Hero Section"
         file: "data/hero.json"
-        description: "Edit the main content on the homepage"
         fields:
-          - {label: "Main Heading", name: "heading", widget: "string"}
-          - {label: "Sub-heading", name: "subtext", widget: "string"}
-          - {label: "Avatar Image", name: "avatar", widget: "image"}
-          - {label: "Button Text", name: "btn_text", widget: "string"}
+          - {label: "Heading", name: "heading", widget: "string"}
+          - {label: "Subtext", name: "subtext", widget: "string"}
+          - {label: "Avatar", name: "avatar", widget: "image"}
+          - {label: "Button", name: "btn_text", widget: "string"}
 
       - name: "settings"
         label: "Theme Settings"
         file: "data/settings.json"
-        description: "Change global colors"
         fields:
           - {label: "Primary Color", name: "primary_color", widget: "color"}
           - {label: "Secondary Color", name: "secondary_color", widget: "color"}
-          - {label: "Background Color", name: "bg_color", widget: "color"}
-              - {label: "Skill Name", name: "label", widget: "string"}
-              - {label: "Level (%)", name: "value", widget: "number", value_type: "int", min: 0, max: 100}
-
-      - name: "settings"
-        label: "Theme Settings"
-        file: "data/settings.json"
-        description: "Change global colors and site info"
-        fields:
-          - {label: "Site Title", name: "site_title", widget: "string"}
-          - {label: "Primary Color (Neon Green)", name: "primary_color", widget: "color"}
-          - {label: "Secondary Color (Purple)", name: "secondary_color", widget: "color"}
           - {label: "Background Color", name: "bg_color", widget: "color"}
