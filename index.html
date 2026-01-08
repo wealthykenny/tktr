@@ -19,10 +19,19 @@
 
     <main>
         <section class="hero">
-            <img id="site-avatar" src="https://huggingface.co/spaces/Lordecyhper/stohrage/resolve/main/IMG_8296.jpeg" class="pixel-avatar">
-            <h1><span id="hero-heading">PROFESSIONAL PORTFOLIO</span> <span id="hero-subheading">TR-KING</span></h1>
-            <div class="typewriter"><span id="typing-text"></span><span class="cursor"></span></div>
-            <button class="btn-pixel" onclick="document.getElementById('stats').scrollIntoView({behavior:'smooth'})">Initialize Profile</button>
+            <img id="site-avatar" src="https://huggingface.co/spaces/Lordecyhper/stohrage/resolve/main/IMG_8296.jpeg" class="pixel-avatar" alt="Profile Avatar">
+            
+            <h1>
+                <span id="hero-heading">PROFESSIONAL PORTFOLIO</span> 
+                <br>
+                <span id="hero-subheading" style="color: var(--neon-purple); font-size: 0.8em; letter-spacing: 3px;">TR-KING</span>
+            </h1>
+            
+            <div class="typewriter">
+                <span id="typing-text"></span><span class="cursor"></span>
+            </div>
+            
+            <button class="btn-pixel" id="hero-btn" onclick="document.getElementById('stats').scrollIntoView({behavior:'smooth'})">Initialize Profile</button>
         </section>
 
         <section class="stats-section container" id="stats">
@@ -34,51 +43,92 @@
     </main>
 
     <script>
-        // --- 1. SETTINGS & CONTENT LOADER ---
+        // --- 1. SETTINGS & CONTENT LOADER (The Brain) ---
         async function loadCMSData() {
             try {
-                const settings = await fetch('/data/settings.json').then(res => res.json());
-                if(settings.avatar) document.getElementById('site-avatar').src = settings.avatar;
-                if(settings.theme_color) document.documentElement.style.setProperty('--primary-color', settings.theme_color);
-                
-                const hero = await fetch('/data/hero.json').then(res => res.json());
-                if(hero.heading) document.getElementById('hero-heading').textContent = hero.heading;
-                if(hero.sub_heading) document.getElementById('hero-subheading').textContent = hero.sub_heading;
-                if(hero.phrases) phrases = hero.phrases; 
+                // A. Load Theme Settings (Colors)
+                const settingsReq = await fetch('/data/settings.json');
+                if (settingsReq.ok) {
+                    const settings = await settingsReq.json();
+                    if(settings.primary_color) document.documentElement.style.setProperty('--neon-green', settings.primary_color);
+                    if(settings.secondary_color) document.documentElement.style.setProperty('--neon-purple', settings.secondary_color);
+                    if(settings.bg_color) document.documentElement.style.setProperty('--bg-color', settings.bg_color);
+                }
 
-                const statsData = await fetch('/data/stats.json').then(res => res.json());
-                const container = document.getElementById('stat-container');
-                if(statsData.skills) {
-                    container.innerHTML = statsData.skills.map(s => `
-                        <div class="stat-item">
-                            <label>${s.label} <span class="xp-text">${s.tag}</span></label>
-                            <div class="stat-bar-container">
-                                <div class="stat-bar" style="width: ${s.percent}%"></div>
+                // B. Load Hero Content (Text & Avatar)
+                const heroReq = await fetch('/data/hero.json');
+                if (heroReq.ok) {
+                    const hero = await heroReq.json();
+                    
+                    // Update Text
+                    if(hero.heading) document.getElementById('hero-heading').innerText = hero.heading;
+                    if(hero.btn_text) document.getElementById('hero-btn').innerText = hero.btn_text;
+                    
+                    // Update Avatar
+                    if(hero.avatar) {
+                        // Fix for Netlify media path if it starts with "assets/"
+                        let avatarPath = hero.avatar;
+                        if (!avatarPath.startsWith('http') && !avatarPath.startsWith('/')) {
+                            avatarPath = '/' + avatarPath;
+                        }
+                        document.getElementById('site-avatar').src = avatarPath;
+                    }
+
+                    // Update Typewriter Text (If subtext exists, make it the phrase)
+                    if(hero.subtext) {
+                        phrases = [hero.subtext];
+                    }
+                }
+
+                // C. Load Stats (Skills)
+                const statsReq = await fetch('/data/stats.json');
+                if (statsReq.ok) {
+                    const statsData = await statsReq.json();
+                    const container = document.getElementById('stat-container');
+                    
+                    if(statsData.skills) {
+                        container.innerHTML = statsData.skills.map(s => `
+                            <div class="stat-item">
+                                <label>${s.label || 'Skill'} <span class="xp-text">${s.value}%</span></label>
+                                <div class="stat-bar-container">
+                                    <div class="stat-bar" style="width: ${s.value}%"></div>
+                                </div>
                             </div>
-                            <p style="font-size: 0.9rem; margin-top: 5px; color:#666;">${s.desc}</p>
-                        </div>
-                    `).join('');
+                        `).join('');
+                    }
                 }
             } catch (e) { 
-                console.log("CMS data not initialized yet."); 
+                console.log("CMS data waiting for initialization...", e); 
             }
         }
 
         // --- 2. TYPEWRITER EFFECT ---
-        let phrases = ["MACHINE LEARNING EXPERT", "SCIENCE ENTHUSIAST"];
+        let phrases = ["MACHINE LEARNING EXPERT", "FULL STACK DEV"]; // Defaults
         const textElement = document.getElementById('typing-text');
         let pIdx = 0, cIdx = 0, isDel = false;
 
         function type() {
             const curr = phrases[pIdx];
+            // Safety check to prevent crash if phrase is undefined
+            if (!curr) return; 
+            
             textElement.textContent = isDel ? curr.substring(0, cIdx--) : curr.substring(0, cIdx++);
-            if (!isDel && cIdx > curr.length) { isDel = true; setTimeout(type, 2000); }
-            else if (isDel && cIdx < 0) { isDel = false; pIdx = (pIdx + 1) % phrases.length; setTimeout(type, 500); }
-            else { setTimeout(type, isDel ? 50 : 100); }
+            
+            let speed = isDel ? 50 : 100;
+            
+            if (!isDel && cIdx > curr.length) { 
+                isDel = true; 
+                speed = 2000; // Pause at end
+            } else if (isDel && cIdx < 0) { 
+                isDel = false; 
+                pIdx = (pIdx + 1) % phrases.length; 
+                speed = 500; 
+            }
+            
+            setTimeout(type, speed);
         }
 
-        // --- 3. IDENTITY & INIT ---
-        // ✅ IDENTITY PART 2: The Login Redirect Logic is here
+        // --- 3. IDENTITY REDIRECT LOGIC ---
         if (window.netlifyIdentity) {
             window.netlifyIdentity.on("init", user => {
                 if (!user) {
@@ -89,9 +139,10 @@
             });
         }
 
+        // --- 4. START ENGINE ---
         document.addEventListener('DOMContentLoaded', () => {
-            loadCMSData();
-            type();
+            loadCMSData(); // Load CMS data first
+            type();        // Then start typing
         });
     </script>
 </body>
