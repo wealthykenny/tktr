@@ -1,0 +1,17 @@
+:root {
+  /* These will be overwritten by the JS below */
+  --primary-color: #3b82f6;
+  --accent-color: #1e293b;
+}
+
+body {
+  font-family: sans-serif;
+  color: var(--accent-color);
+}
+
+.avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 3px solid var(--primary-color);
+}
