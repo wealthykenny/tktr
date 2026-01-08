@@ -1,0 +1,32 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  # COLLECTION 1: Site Styles & Identity
+  - name: "settings"
+    label: "Site Settings"
+    delete: false
+    files:
+      - name: "appearance"
+        label: "Appearance & Avatar"
+        file: "data/settings.json"
+        fields:
+          - {label: "Site Avatar", name: "avatar", widget: "image"}
+          - {label: "Primary Theme Color", name: "theme_color", widget: "color", default: "#3b82f6"}
+          - {label: "Secondary Color", name: "accent_color", widget: "color", default: "#1e293b"}
+
+  # COLLECTION 2: Creating and Deleting Pages
+  - name: "pages"
+    label: "Custom Pages"
+    folder: "content/pages"
+    create: true # Allows creating new pages
+    delete: true # Allows deleting pages
+    slug: "{{slug}}"
+    fields:
+      - {label: "Page Title", name: "title", widget: "string"}
+      - {label: "URL Path", name: "path", widget: "string", hint: "e.g. 'about' or 'services'"}
+      - {label: "Page Content", name: "body", widget: "markdown"}
