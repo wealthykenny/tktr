@@ -1,13 +1,10 @@
 backend:
   name: git-gateway
-  branch: main # Change to 'master' if your branch is named master
+  branch: main
 
-# This is where images uploaded via the CMS will be saved in your repo
 media_folder: "assets/uploads"
-# This is the path the site uses to find images (relative to index.html)
 public_folder: "assets/uploads"
 
-# This removes the "Draft" stage, publishing changes immediately
 publish_mode: editorial_workflow
 
 collections:
@@ -20,20 +17,18 @@ collections:
         description: "Edit the main content on the homepage"
         fields:
           - {label: "Main Heading", name: "heading", widget: "string"}
-          - {label: "Sub-heading (Typewriter)", name: "subtext", widget: "string"}
+          - {label: "Sub-heading", name: "subtext", widget: "string"}
           - {label: "Avatar Image", name: "avatar", widget: "image"}
           - {label: "Button Text", name: "btn_text", widget: "string"}
-          - {label: "Button Link", name: "btn_link", widget: "string"}
 
-      - name: "stats"
-        label: "RPG Stats"
-        file: "data/stats.json"
-        description: "Update your skill levels"
+      - name: "settings"
+        label: "Theme Settings"
+        file: "data/settings.json"
+        description: "Change global colors"
         fields:
-          - label: "Skills"
-            name: "skills"
-            widget: "list"
-            fields:
+          - {label: "Primary Color", name: "primary_color", widget: "color"}
+          - {label: "Secondary Color", name: "secondary_color", widget: "color"}
+          - {label: "Background Color", name: "bg_color", widget: "color"}
               - {label: "Skill Name", name: "label", widget: "string"}
               - {label: "Level (%)", name: "value", widget: "number", value_type: "int", min: 0, max: 100}
 
