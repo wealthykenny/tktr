@@ -8,7 +8,7 @@
     --pixel-white: #c9d1d9;
     --retro-gray: #484f58;
     
-    /* Dynamic Admin Variables (Updated via Netlify Settings) */
+    /* Dynamic Admin Variables (Controlled via settings.json) */
     --primary-color: #3b82f6; 
     --accent-color: #1e293b;
 
@@ -26,7 +26,7 @@
 
 body {
     background-color: var(--bg-color);
-    color: var(--pixel-white); /* Defaults to retro white */
+    color: var(--pixel-white);
     font-family: var(--font-body);
     font-size: 20px;
     overflow-x: hidden;
@@ -44,7 +44,7 @@ body::after {
     right: 0;
     background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), 
                 linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
-    z-index: 2;
+    z-index: 9999; /* Over everything but non-blocking */
     background-size: 100% 2px, 3px 100%;
     pointer-events: none;
 }
@@ -54,10 +54,8 @@ h1, h2, h3 {
     font-family: var(--font-heading);
     text-transform: uppercase;
     line-height: 1.5;
-    color: var(--primary-color); /* Uses dynamic admin color for headings */
+    color: var(--primary-color);
 }
-
-a { text-decoration: none; color: inherit; }
 
 .container {
     max-width: 1000px;
@@ -67,6 +65,28 @@ a { text-decoration: none; color: inherit; }
 
 .highlight { color: var(--neon-green); }
 
+/* --- NETLIFY IDENTITY MENU STYLING --- */
+/* Makes the login/signup buttons match the pixel vibe */
+[data-netlify-identity-menu] {
+    font-family: var(--font-body);
+    font-size: 1.2rem;
+}
+
+[data-netlify-identity-menu] ul {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+}
+
+.netlify-identity-button {
+    color: var(--neon-green) !important;
+    text-transform: uppercase;
+    background: none !important;
+    border: 1px solid var(--neon-green) !important;
+    padding: 5px 10px !important;
+    cursor: pointer;
+}
+
 /* --- HEADER --- */
 header {
     padding: 20px 0;
@@ -74,7 +94,7 @@ header {
     position: sticky;
     top: 0;
     background: var(--bg-color);
-    z-index: 10;
+    z-index: 100;
 }
 
 .nav-flex {
@@ -83,155 +103,121 @@ header {
     align-items: center;
 }
 
-.logo {
-    font-size: 1rem;
-    letter-spacing: 1px;
-}
-
-/* --- AVATAR & HERO --- */
-.pixel-avatar, .avatar {
-    width: 160px;
-    height: 160px;
-    object-fit: cover;
-    border: 3px solid var(--primary-color); /* Linked to Admin settings color */
-    box-shadow: 6px 6px 0px var(--neon-purple);
-    margin-bottom: 30px;
-    background-color: var(--terminal-bg);
-    image-rendering: pixelated;
-    /* Merge of .avatar radius logic (set to 0 for pixel look, or 50% for circle) */
-    border-radius: 4px; 
-}
-
+/* --- HERO SECTION --- */
 .hero {
-    min-height: 90vh;
-    padding-top: 40px;
+    min-height: 80vh;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     text-align: center;
-    position: relative;
+    padding: 40px 20px;
+}
+
+.pixel-avatar {
+    width: 160px;
+    height: 160px;
+    object-fit: cover;
+    border: 4px solid var(--primary-color);
+    box-shadow: 8px 8px 0px var(--accent-color);
+    margin-bottom: 30px;
+    background-color: var(--terminal-bg);
+    image-rendering: pixelated;
+    border-radius: 4px;
 }
 
 .hero h1 {
-    font-size: 2.5rem;
-    margin-bottom: 20px;
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+    color: var(--pixel-white);
 }
 
-.hero h1 span {
+.hero h1 span#hero-heading {
     display: block;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     color: var(--neon-purple);
-    margin-bottom: 15px;
     font-family: var(--font-body);
-    letter-spacing: 3px;
+    letter-spacing: 4px;
+    margin-bottom: 10px;
 }
 
 .typewriter {
-    font-size: 1.4rem;
+    font-size: 1.6rem;
     color: var(--neon-green);
     min-height: 1.6em;
+    margin: 15px 0;
 }
 
 .cursor {
     display: inline-block;
     background-color: var(--neon-green);
     width: 10px;
-    height: 24px;
+    height: 20px;
     animation: blink 1s infinite;
-    vertical-align: middle;
+}
+
+/* --- RPG STATS --- */
+.rpg-card {
+    background: var(--terminal-bg);
+    border: 3px solid var(--primary-color);
+    padding: 30px;
+    margin-top: 50px;
+    box-shadow: 10px 10px 0px rgba(0,0,0,0.5);
+}
+
+.stat-item {
+    margin-bottom: 25px;
+}
+
+.stat-item label {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-heading);
+    font-size: 0.65rem;
+    margin-bottom: 8px;
+}
+
+.xp-text { color: var(--neon-purple); }
+
+.stat-bar-container {
+    width: 100%;
+    height: 16px;
+    background: #000;
+    border: 1px solid var(--retro-gray);
+    padding: 2px;
+}
+
+.stat-bar {
+    height: 100%;
+    background: var(--neon-green);
+    transition: width 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 /* --- PIXEL BUTTON --- */
 .btn-pixel {
-    margin-top: 40px;
     font-family: var(--font-heading);
     font-size: 0.7rem;
-    padding: 18px 35px;
-    background: transparent;
+    padding: 15px 30px;
+    background: var(--bg-color);
     color: var(--neon-green);
     border: 2px solid var(--neon-green);
-    box-shadow: 4px 4px 0px var(--retro-gray);
+    box-shadow: 5px 5px 0px var(--retro-gray);
     cursor: pointer;
-    transition: all 0.2s;
-    position: relative;
-    z-index: 5;
     text-transform: uppercase;
 }
 
 .btn-pixel:hover {
     background: var(--neon-green);
     color: var(--bg-color);
-    box-shadow: 4px 4px 0px var(--neon-purple);
-}
-
-/* --- STATS SECTION --- */
-.stats-section { padding: 80px 0; }
-
-.rpg-card {
-    background: var(--terminal-bg);
-    border: 2px solid var(--retro-gray);
-    padding: 40px;
-    position: relative;
-}
-
-.rpg-header {
-    border-bottom: 1px solid var(--retro-gray);
-    padding-bottom: 15px;
-    margin-bottom: 30px;
-    display: flex;
-    justify-content: space-between;
-}
-
-.stat-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px;
-}
-
-.stat-bar-container {
-    width: 100%;
-    height: 12px;
-    background: #000;
-    border: 1px solid var(--retro-gray);
-}
-
-.stat-bar {
-    height: 100%;
-    background: var(--neon-green); /* Default bar color */
-    width: 0%;
-    transition: width 1.5s ease-out;
-}
-
-/* --- BADGES --- */
-.badges {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
-    margin-top: 40px;
-}
-
-.badge {
-    background: var(--terminal-bg);
-    border: 1px solid var(--neon-purple);
-    padding: 12px 24px;
-    transition: transform 0.2s;
-}
-
-.badge:hover {
-    transform: translateY(-3px);
-    border-color: var(--neon-green);
-    color: var(--neon-green);
+    box-shadow: 5px 5px 0px var(--neon-purple);
 }
 
 /* --- FOOTER --- */
 footer {
     text-align: center;
-    padding: 40px 0;
-    border-top: 1px solid var(--retro-gray);
-    margin-top: 60px;
+    padding: 60px 20px;
     color: var(--retro-gray);
+    font-family: var(--font-body);
 }
 
 /* --- ANIMATIONS --- */
@@ -240,8 +226,8 @@ footer {
     50% { opacity: 0; }
 }
 
-/* Responsive Fixes */
 @media (max-width: 768px) {
-    .hero h1 { font-size: 1.8rem; }
-    .pixel-avatar, .avatar { width: 130px; height: 130px; }
+    .hero h1 { font-size: 1.4rem; }
+    .typewriter { font-size: 1.2rem; }
+    .pixel-avatar { width: 120px; height: 120px; }
 }
