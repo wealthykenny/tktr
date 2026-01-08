@@ -15,15 +15,30 @@ collections:
         label: "Hero Section"
         file: "data/hero.json"
         fields:
-          - {label: "Heading", name: "heading", widget: "string"}
-          - {label: "Subtext", name: "subtext", widget: "string"}
-          - {label: "Avatar", name: "avatar", widget: "image"}
-          - {label: "Button", name: "btn_text", widget: "string"}
+          - label: "Heading"
+            name: "heading"
+            widget: "string"
+          - label: "Subtext"
+            name: "subtext"
+            widget: "string"
+          - label: "Avatar"
+            name: "avatar"
+            widget: "image"
+          - label: "Button"
+            name: "btn_text"
+            widget: "string"
 
       - name: "settings"
         label: "Theme Settings"
         file: "data/settings.json"
         fields:
-          - {label: "Primary Color", name: "primary_color", widget: "color"}
-          - {label: "Secondary Color", name: "secondary_color", widget: "color"}
-          - {label: "Background Color", name: "bg_color", widget: "color"}
+          - label: "Primary Color"
+            name: "primary_color"
+            widget: "color"
+          - label: "Secondary Color"
+            name: "secondary_color"
+            widget: "color"
+          - label: "Background Color"
+            name: "bg_color"
+            widget: "color"
+            
