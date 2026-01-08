@@ -6,6 +6,7 @@
     <title>TR-KING | Portfolio</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css"> 
+    
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
@@ -34,21 +35,17 @@
 
     <script>
         // --- 1. SETTINGS & CONTENT LOADER ---
-        // This fetches your CMS changes for Avatar, Colors, Hero, and Stats
         async function loadCMSData() {
             try {
-                // Fetch Settings (Colors/Avatar)
                 const settings = await fetch('/data/settings.json').then(res => res.json());
                 if(settings.avatar) document.getElementById('site-avatar').src = settings.avatar;
                 if(settings.theme_color) document.documentElement.style.setProperty('--primary-color', settings.theme_color);
                 
-                // Fetch Hero Data
                 const hero = await fetch('/data/hero.json').then(res => res.json());
                 if(hero.heading) document.getElementById('hero-heading').textContent = hero.heading;
                 if(hero.sub_heading) document.getElementById('hero-subheading').textContent = hero.sub_heading;
-                if(hero.phrases) phrases = hero.phrases; // Update typewriter
+                if(hero.phrases) phrases = hero.phrases; 
 
-                // Fetch Stats
                 const statsData = await fetch('/data/stats.json').then(res => res.json());
                 const container = document.getElementById('stat-container');
                 if(statsData.skills) {
@@ -62,7 +59,9 @@
                         </div>
                     `).join('');
                 }
-            } catch (e) { console.log("CMS data not initialized yet."); }
+            } catch (e) { 
+                console.log("CMS data not initialized yet."); 
+            }
         }
 
         // --- 2. TYPEWRITER EFFECT ---
@@ -79,10 +78,13 @@
         }
 
         // --- 3. IDENTITY & INIT ---
+        // ✅ IDENTITY PART 2: The Login Redirect Logic is here
         if (window.netlifyIdentity) {
             window.netlifyIdentity.on("init", user => {
                 if (!user) {
-                    window.netlifyIdentity.on("login", () => { document.location.href = "/admin/"; });
+                    window.netlifyIdentity.on("login", () => { 
+                        document.location.href = "/admin/"; 
+                    });
                 }
             });
         }
