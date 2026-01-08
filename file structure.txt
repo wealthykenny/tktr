@@ -1,0 +1,11 @@
+root/
+├── index.html
+├── style.css
+├── data/
+│   └── (CMS will create files here)
+├── admin/
+│   ├── index.html   <-- (The Admin Page code above)
+│   └── config.yml   <-- (The Config code from previous step)
+└── .github/
+    └── workflows/
+        └── deploy.yml
