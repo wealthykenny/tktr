@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+    
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     
     <link rel="stylesheet" href="style.css"> 
@@ -17,7 +18,9 @@
     <header>
         <div class="container nav-flex">
             <div class="logo">USER: <span class="highlight">TR_KING</span></div>
+            
             <div data-netlify-identity-menu></div> 
+            
             <div style="font-family: var(--font-heading); font-size: 0.5rem; color: var(--retro-gray);">SYS.ADMIN</div>
         </div>
     </header>
@@ -95,7 +98,7 @@
     </footer>
 
     <script>
-        // --- ADMIN SETTINGS LOADER ---
+        // --- 1. SETTINGS LOADER ---
         fetch('/data/settings.json')
             .then(res => res.json())
             .then(data => {
@@ -103,9 +106,9 @@
                 if(data.theme_color) document.documentElement.style.setProperty('--primary-color', data.theme_color);
                 if(data.accent_color) document.documentElement.style.setProperty('--accent-color', data.accent_color);
             })
-            .catch(err => console.log("Settings file not found or empty"));
+            .catch(err => console.log("Settings file not found or empty, using defaults."));
 
-        // --- TYPEWRITER EFFECT ---
+        // --- 2. TYPEWRITER EFFECT ---
         const textElement = document.getElementById('typing-text');
         const phrases = ["MACHINE LEARNING EXPERT", "SCIENCE ENTHUSIAST", "HISTORY GUY", "PHILOSOPHY ENTHUSIAST"];
         let phraseIndex = 0;
@@ -114,7 +117,9 @@
         let typeSpeed = 80;
 
         function type() {
+            if (!textElement) return;
             const currentPhrase = phrases[phraseIndex];
+            
             if (isDeleting) {
                 textElement.textContent = currentPhrase.substring(0, charIndex - 1);
                 charIndex--;
@@ -136,13 +141,15 @@
             setTimeout(type, typeSpeed);
         }
 
-        // --- STATS ANIMATION ---
+        // --- 3. STATS ANIMATION ---
         function animateStats() {
             const statsSection = document.getElementById('stats');
             const bars = document.querySelectorAll('.stat-bar');
             if(!statsSection) return;
+            
             const sectionPos = statsSection.getBoundingClientRect().top;
             const screenPos = window.innerHeight / 1.3;
+            
             if (sectionPos < screenPos) {
                 bars.forEach(bar => {
                     bar.style.width = bar.getAttribute('data-width');
@@ -151,20 +158,24 @@
         }
 
         function scrollToStats() {
-            document.getElementById('stats').scrollIntoView({ behavior: 'smooth' });
+            const stats = document.getElementById('stats');
+            if(stats) stats.scrollIntoView({ behavior: 'smooth' });
         }
 
-        // --- INITIALIZE ---
+        // --- 4. INITIALIZATION ---
         document.addEventListener('DOMContentLoaded', () => {
             type();
             window.addEventListener('scroll', animateStats);
+            animateStats(); // Check on load
         });
 
-        // --- NETLIFY IDENTITY REDIRECT ---
+        // --- 5. NETLIFY IDENTITY LOGIC ---
+        // This handles the Login Button click and redirecting to Admin
         if (window.netlifyIdentity) {
             window.netlifyIdentity.on("init", user => {
                 if (!user) {
                     window.netlifyIdentity.on("login", () => {
+                        // Redirect to the Admin Dashboard upon successful login
                         document.location.href = "/admin/";
                     });
                 }
