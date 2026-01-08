@@ -1,0 +1,68 @@
+backend:
+  name: github
+  repo: wealthykenny/tktr # Your GitHub username/repo
+  branch: main
+  
+# This allows you to save "Drafts" before publishing live
+publish_mode: editorial_workflow
+
+# Media handling
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+# ----------------------------------------------------------------------
+# CONTENT COLLECTIONS
+# ----------------------------------------------------------------------
+collections:
+  # 1. GLOBAL SETTINGS (Theme & Identity)
+  - name: "settings"
+    label: "Global Settings"
+    delete: false
+    editor:
+      preview: false
+    files:
+      - name: "appearance"
+        label: "Site Appearance"
+        file: "data/settings.json"
+        fields:
+          - {label: "Site Avatar", name: "avatar", widget: "image", default: "/images/uploads/default-avatar.jpg"}
+          - {label: "Primary Theme Color", name: "theme_color", widget: "color", default: "#3b82f6"}
+          - {label: "Secondary Accent Color", name: "accent_color", widget: "color", default: "#1e293b"}
+
+  # 2. HOMEPAGE CONTENT (The "Powerful" Update)
+  # This allows you to edit the text/stats on your index.html without touching code
+  - name: "homepage"
+    label: "Homepage Sections"
+    delete: false
+    files:
+      - name: "hero"
+        label: "Hero Section"
+        file: "data/hero.json"
+        fields:
+          - {label: "Main Heading", name: "heading", widget: "string", default: "PROFESSIONAL PORTFOLIO"}
+          - {label: "Sub Heading", name: "sub_heading", widget: "string", default: "TR-KING"}
+          - {label: "Typewriter Phrases", name: "phrases", widget: "list", default: ["MACHINE LEARNING EXPERT", "SCIENCE ENTHUSIAST"]}
+      
+      - name: "stats"
+        label: "Stats & Skills"
+        file: "data/stats.json"
+        fields:
+          - label: "Skill Bars"
+            name: "skills"
+            widget: "list"
+            fields:
+              - {label: "Skill Name", name: "label", widget: "string"}
+              - {label: "Tag", name: "tag", widget: "string", hint: "e.g. PRIMARY or ACADEMIC"}
+              - {label: "Percentage (0-100%)", name: "percent", widget: "number", value_type: "string"}
+              - {label: "Description", name: "desc", widget: "string"}
+
+  # 3. CUSTOM PAGES (For expansion)
+  - name: "pages"
+    label: "Custom Pages"
+    folder: "content/pages"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Permalink", name: "path", widget: "string"}
+      - {label: "Body", name: "body", widget: "markdown"}
