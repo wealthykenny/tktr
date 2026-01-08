@@ -1,11 +1,14 @@
-root/
+/ (Root)
 ├── index.html
 ├── style.css
-├── data/
-│   └── (CMS will create files here)
+├── _redirects         <-- ADD THIS
 ├── admin/
-│   ├── index.html   <-- (The Admin Page code above)
-│   └── config.yml   <-- (The Config code from previous step)
+│   ├── index.html     <-- Check this is named exactly index.html
+│   └── config.yml
+├── data/
+│   ├── settings.json
+│   ├── hero.json
+│   └── stats.json
 └── .github/
     └── workflows/
         └── deploy.yml
