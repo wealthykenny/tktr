@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Tektrey Admin</title>
+  <link rel="stylesheet" href="./admin.css" />
+</head>
+<body>
+  <div class="wrap">
+    <header class="top">
+      <h1>Tektrey Admin</h1>
+      <div class="right">
+        <span id="me"></span>
+        <button id="logout" class="btn ghost">Logout</button>
+      </div>
+    </header>
+
+    <section id="auth" class="card">
+      <h2>Login</h2>
+      <div class="grid2">
+        <input id="u" placeholder="username" autocomplete="username" />
+        <input id="p" placeholder="password" type="password" autocomplete="current-password" />
+      </div>
+      <button id="login" class="btn">Sign in</button>
+      <p id="authErr" class="err"></p>
+    </section>
+
+    <main id="app" class="hidden">
+      <section class="card">
+        <h2>Hero Copy</h2>
+        <input id="heroHeadline" placeholder="Headline" />
+        <textarea id="heroSubtitle" rows="3" placeholder="Subtitle"></textarea>
+        <button id="saveHero" class="btn">Save</button>
+        <span id="heroMsg" class="ok"></span>
+      </section>
+
+      <section class="card">
+        <h2>Skills</h2>
+        <div class="grid3">
+          <input id="skillLabel" placeholder="Label (e.g. JavaScript)" />
+          <input id="skillPercent" placeholder="Percent (0-100)" type="number" min="0" max="100" />
+          <button id="addSkill" class="btn">Add</button>
+        </div>
+        <div id="skillsList" class="list"></div>
+      </section>
+
+      <section class="card">
+        <h2>Projects</h2>
+        <div class="grid2">
+          <input id="projTitle" placeholder="Title" />
+          <input id="projStack" placeholder="Stack (comma-separated)" />
+        </div>
+        <textarea id="projSummary" rows="4" placeholder="Summary"></textarea>
+        <input id="projLinks" placeholder='Links JSON e.g. [{"label":"GitHub","url":"..."}]' />
+        <div class="grid2">
+          <label class="chk"><input id="projFeatured" type="checkbox" /> Featured</label>
+          <button id="addProject" class="btn">Add Project</button>
+        </div>
+        <div id="projectsList" class="list"></div>
+      </section>
+    </main>
+  </div>
+
+  <script src="./admin.js"></script>
+</body>
+</html>
