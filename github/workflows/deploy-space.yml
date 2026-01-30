@@ -1,4 +1,4 @@
-name: Deploy HF Admin Space
+name: Deploy HF Space (TKO)
 
 on:
   push:
@@ -16,8 +16,6 @@ jobs:
       - name: Push /space to Hugging Face Space
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
-          HF_USERNAME: ${{ secrets.HF_USERNAME }}
-          HF_SPACE: ${{ secrets.HF_SPACE }}
         run: |
           cd space
           git init
@@ -26,5 +24,5 @@ jobs:
           git add .
           git commit -m "Deploy Space" || true
 
-          git remote add space https://$HF_USERNAME:$HF_TOKEN@huggingface.co/spaces/$HF_USERNAME/$HF_SPACE
+          git remote add space https://Shinhati2023:$HF_TOKEN@huggingface.co/spaces/Shinhati2023/TKO
           git push --force space main
