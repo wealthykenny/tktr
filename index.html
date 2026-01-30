@@ -1,149 +1,308 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TR-KING | Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css"> 
-    
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TR-KING | Portfolio</title>
+
+  <!-- Fonts: keep your retro DNA -->
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
-    <header>
-        <div class="container nav-flex">
-            <div class="logo">USER: <span class="highlight">TR_KING</span></div>
-            <div data-netlify-identity-menu></div> 
-        </div>
-    </header>
+  <!-- CRT overlay (non-blocking) -->
+  <div class="crt-overlay" aria-hidden="true"></div>
 
-    <main>
-        <section class="hero">
-            <img id="site-avatar" src="https://huggingface.co/spaces/Lordecyhper/stohrage/resolve/main/IMG_8296.jpeg" class="pixel-avatar" alt="Profile Avatar">
-            
-            <h1>
-                <span id="hero-heading">PROFESSIONAL PORTFOLIO</span> 
-                <br>
-                <span id="hero-subheading" style="color: var(--neon-purple); font-size: 0.8em; letter-spacing: 3px;">TR-KING</span>
-            </h1>
-            
+  <!-- Background effect stack -->
+  <div class="bg-effects" aria-hidden="true">
+    <div class="blur-rect r1"></div>
+    <div class="blur-rect r2"></div>
+    <div class="blur-rect r3"></div>
+    <div class="red-glow"></div>
+    <div class="grain"></div>
+  </div>
+
+  <header class="topbar">
+    <div class="container nav-flex">
+      <div class="logo">USER: <span class="highlight">TR_KING</span></div>
+      <nav class="nav">
+        <a href="#projects">Projects</a>
+        <a href="#stats">Skills</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="hero" class="hero container">
+      <div class="glass hero-card">
+        <div class="hero-left">
+          <div class="avatar-wrap">
+            <img
+              id="site-avatar"
+              class="avatar"
+              src="https://huggingface.co/spaces/Lordecyhper/stohrage/resolve/main/IMG_8296.jpeg"
+              alt="TR-KING avatar"
+              loading="eager"
+            />
+            <div class="avatar-ring" aria-hidden="true"></div>
+          </div>
+
+          <div class="hero-copy">
+            <p class="tagline">PROFESSIONAL PORTFOLIO</p>
+            <h1 id="heroTitle">TR-KING — Software Developer</h1>
+            <p id="heroSubtitle" class="subtitle">
+              I build modern web apps and reliable APIs with JavaScript and Python, and I train custom AI LoRAs as part of practical ML workflows.
+            </p>
+
             <div class="typewriter">
-                <span id="typing-text"></span><span class="cursor"></span>
+              <span id="typing-text"></span><span class="cursor"></span>
             </div>
-            
-            <button class="btn-pixel" id="hero-btn" onclick="document.getElementById('stats').scrollIntoView({behavior:'smooth'})">Initialize Profile</button>
-        </section>
 
-        <section class="stats-section container" id="stats">
-            <div class="rpg-card">
-                <div class="stat-grid" id="stat-container">
-                    </div>
+            <div class="hero-cta">
+              <button class="btn-glass" id="heroBtn" type="button">
+                Initialize Profile
+              </button>
+              <a class="btn-ghost" href="#projects">View Work</a>
             </div>
-        </section>
-    </main>
 
-    <script>
-        // --- 1. SETTINGS & CONTENT LOADER (The Brain) ---
-        async function loadCMSData() {
-            try {
-                // A. Load Theme Settings (Colors)
-                const settingsReq = await fetch('/data/settings.json');
-                if (settingsReq.ok) {
-                    const settings = await settingsReq.json();
-                    if(settings.primary_color) document.documentElement.style.setProperty('--neon-green', settings.primary_color);
-                    if(settings.secondary_color) document.documentElement.style.setProperty('--neon-purple', settings.secondary_color);
-                    if(settings.bg_color) document.documentElement.style.setProperty('--bg-color', settings.bg_color);
-                }
+            <div class="meta">
+              <span class="chip">Web & API</span>
+              <span class="chip">JavaScript</span>
+              <span class="chip">Python</span>
+              <span class="chip">LoRA Training</span>
+            </div>
+          </div>
+        </div>
 
-                // B. Load Hero Content (Text & Avatar)
-                const heroReq = await fetch('/data/hero.json');
-                if (heroReq.ok) {
-                    const hero = await heroReq.json();
-                    
-                    // Update Text
-                    if(hero.heading) document.getElementById('hero-heading').innerText = hero.heading;
-                    if(hero.btn_text) document.getElementById('hero-btn').innerText = hero.btn_text;
-                    
-                    // Update Avatar
-                    if(hero.avatar) {
-                        // Fix for Netlify media path if it starts with "assets/"
-                        let avatarPath = hero.avatar;
-                        if (!avatarPath.startsWith('http') && !avatarPath.startsWith('/')) {
-                            avatarPath = '/' + avatarPath;
-                        }
-                        document.getElementById('site-avatar').src = avatarPath;
-                    }
+        <div class="hero-right">
+          <div class="glass panel">
+            <div class="panel-title">System Status</div>
+            <div class="panel-row">
+              <span class="k">Host</span>
+              <span class="v">tektrey.online</span>
+            </div>
+            <div class="panel-row">
+              <span class="k">Content API</span>
+              <span class="v">Shinhati2023/TKO</span>
+            </div>
+            <div class="panel-row">
+              <span class="k">Mode</span>
+              <span class="v ok">LIVE</span>
+            </div>
+            <div class="panel-row">
+              <span class="k">Updated</span>
+              <span class="v" id="updatedAt">—</span>
+            </div>
+          </div>
 
-                    // Update Typewriter Text (If subtext exists, make it the phrase)
-                    if(hero.subtext) {
-                        phrases = [hero.subtext];
-                    }
-                }
+          <div class="glass panel">
+            <div class="panel-title">Quick Bio</div>
+            <p class="panel-text">
+              I care about clean architecture, real admin systems, and UI that feels expensive. If it ships, it’s built to last.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-                // C. Load Stats (Skills)
-                const statsReq = await fetch('/data/stats.json');
-                if (statsReq.ok) {
-                    const statsData = await statsReq.json();
-                    const container = document.getElementById('stat-container');
-                    
-                    if(statsData.skills) {
-                        container.innerHTML = statsData.skills.map(s => `
-                            <div class="stat-item">
-                                <label>${s.label || 'Skill'} <span class="xp-text">${s.value}%</span></label>
-                                <div class="stat-bar-container">
-                                    <div class="stat-bar" style="width: ${s.value}%"></div>
-                                </div>
-                            </div>
-                        `).join('');
-                    }
-                }
-            } catch (e) { 
-                console.log("CMS data waiting for initialization...", e); 
-            }
-        }
+    <section id="projects" class="section container">
+      <div class="section-head">
+        <h2>Featured Work</h2>
+        <p class="muted">Selected projects, shipped with intent.</p>
+      </div>
 
-        // --- 2. TYPEWRITER EFFECT ---
-        let phrases = ["MACHINE LEARNING EXPERT", "FULL STACK DEV"]; // Defaults
-        const textElement = document.getElementById('typing-text');
-        let pIdx = 0, cIdx = 0, isDel = false;
+      <div id="projectsGrid" class="grid"></div>
+    </section>
 
-        function type() {
-            const curr = phrases[pIdx];
-            // Safety check to prevent crash if phrase is undefined
-            if (!curr) return; 
-            
-            textElement.textContent = isDel ? curr.substring(0, cIdx--) : curr.substring(0, cIdx++);
-            
-            let speed = isDel ? 50 : 100;
-            
-            if (!isDel && cIdx > curr.length) { 
-                isDel = true; 
-                speed = 2000; // Pause at end
-            } else if (isDel && cIdx < 0) { 
-                isDel = false; 
-                pIdx = (pIdx + 1) % phrases.length; 
-                speed = 500; 
-            }
-            
-            setTimeout(type, speed);
-        }
+    <section id="stats" class="section container">
+      <div class="section-head">
+        <h2>Skills</h2>
+        <p class="muted">A quick snapshot of what I actually use.</p>
+      </div>
 
-        // --- 3. IDENTITY REDIRECT LOGIC ---
-        if (window.netlifyIdentity) {
-            window.netlifyIdentity.on("init", user => {
-                if (!user) {
-                    window.netlifyIdentity.on("login", () => { 
-                        document.location.href = "/admin/"; 
-                    });
-                }
-            });
-        }
+      <div class="glass card">
+        <div id="skillsList" class="skills"></div>
+      </div>
+    </section>
 
-        // --- 4. START ENGINE ---
-        document.addEventListener('DOMContentLoaded', () => {
-            loadCMSData(); // Load CMS data first
-            type();        // Then start typing
-        });
-    </script>
+    <section id="contact" class="section container">
+      <div class="glass card contact">
+        <h2>Contact</h2>
+        <p class="muted">Want to build something clean and fast? Let’s talk.</p>
+        <div class="contact-row">
+          <span class="k">Email</span>
+          <a class="v" href="mailto:you@tektrey.online">you@tektrey.online</a>
+        </div>
+        <div class="contact-row">
+          <span class="k">GitHub</span>
+          <a class="v" href="https://github.com/wealthykenny" target="_blank" rel="noreferrer">github.com/wealthykenny</a>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer container">
+      <span class="muted">© <span id="year"></span> TR-KING • Built with intent.</span>
+    </footer>
+  </main>
+
+  <script>
+    // ----------------------------
+    // 1) Live content from HF API
+    // ----------------------------
+    const API_BASE = "https://shinhati2023-tko.hf.space";
+
+    function esc(s) {
+      return String(s ?? "").replace(/[&<>"']/g, m => ({
+        "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+      }[m]));
+    }
+
+    function setText(sel, text) {
+      const el = document.querySelector(sel);
+      if (el) el.textContent = text ?? "";
+    }
+
+    function normalizeAvatar(url) {
+      if (!url) return null;
+      // allow absolute URLs; otherwise treat as relative
+      if (url.startsWith("http")) return url;
+      if (url.startsWith("/")) return url;
+      return "/" + url;
+    }
+
+    function renderSkills(skills) {
+      const root = document.getElementById("skillsList");
+      if (!root) return;
+
+      if (!Array.isArray(skills) || skills.length === 0) {
+        root.innerHTML = `<div class="muted">No skills added yet.</div>`;
+        return;
+      }
+
+      root.innerHTML = skills.map(s => {
+        const label = esc(s.label || "Skill");
+        const pct = Math.max(0, Math.min(100, Number(s.percent ?? 0)));
+        return `
+          <div class="skill">
+            <div class="skill-top">
+              <span class="skill-label">${label}</span>
+              <span class="skill-pct">${pct}%</span>
+            </div>
+            <div class="bar">
+              <div class="bar-fill" style="width:${pct}%"></div>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function renderProjects(projects) {
+      const grid = document.getElementById("projectsGrid");
+      if (!grid) return;
+
+      if (!Array.isArray(projects) || projects.length === 0) {
+        grid.innerHTML = `<div class="glass card muted">No projects yet — add some in the admin.</div>`;
+        return;
+      }
+
+      grid.innerHTML = projects.map(p => {
+        const title = esc(p.title || "Untitled");
+        const summary = esc(p.summary || "");
+        const stack = esc(p.stack || "");
+        const links = Array.isArray(p.links) ? p.links : [];
+
+        const linksHtml = links.slice(0, 3).map(l => {
+          const label = esc(l.label || "Link");
+          const url = esc(l.url || "#");
+          return `<a class="link" href="${url}" target="_blank" rel="noreferrer">${label}</a>`;
+        }).join("");
+
+        return `
+          <article class="glass card project">
+            <div class="project-head">
+              <h3>${title}</h3>
+              ${p.featured ? `<span class="badge">Featured</span>` : ``}
+            </div>
+            <p class="muted">${summary}</p>
+            ${stack ? `<div class="stack">${stack}</div>` : ``}
+            ${linksHtml ? `<div class="links">${linksHtml}</div>` : ``}
+          </article>
+        `;
+      }).join("");
+    }
+
+    async function loadContent() {
+      try {
+        const res = await fetch(`${API_BASE}/api/public/content`);
+        const data = await res.json();
+
+        // hero copy
+        if (data?.content?.hero_headline) setText("#heroTitle", data.content.hero_headline);
+        if (data?.content?.hero_subtitle) setText("#heroSubtitle", data.content.hero_subtitle);
+
+        // updated time
+        if (data?.content?.updated_at) setText("#updatedAt", data.content.updated_at);
+
+        // skills + projects
+        renderSkills(data.skills);
+        renderProjects(data.projects);
+
+      } catch (err) {
+        console.log("Content API not reachable yet:", err);
+      }
+    }
+
+    loadContent();
+
+    // ----------------------------
+    // 2) Typewriter effect (clean + pro)
+    // ----------------------------
+    const phrases = [
+      "Web & API Engineering",
+      "JavaScript • Python",
+      "LoRA Training • ML Workflows",
+      "Clean UI • Real Systems"
+    ];
+
+    const textElement = document.getElementById("typing-text");
+    let pIdx = 0, cIdx = 0, isDel = false;
+
+    function type() {
+      if (!textElement) return;
+      const curr = phrases[pIdx];
+      textElement.textContent = isDel ? curr.substring(0, cIdx--) : curr.substring(0, cIdx++);
+
+      let speed = isDel ? 40 : 70;
+
+      if (!isDel && cIdx > curr.length) {
+        isDel = true;
+        speed = 1200;
+      } else if (isDel && cIdx < 0) {
+        isDel = false;
+        pIdx = (pIdx + 1) % phrases.length;
+        speed = 350;
+      }
+      setTimeout(type, speed);
+    }
+    type();
+
+    // ----------------------------
+    // 3) CTA scroll
+    // ----------------------------
+    document.getElementById("heroBtn")?.addEventListener("click", () => {
+      document.getElementById("stats")?.scrollIntoView({ behavior: "smooth" });
+    });
+
+    // year
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // avatar fallback
+    const avatar = document.getElementById("site-avatar");
+    avatar?.addEventListener("error", () => {
+      avatar.src = "https://www.gravatar.com/avatar/?d=mp&s=240";
+    });
+  </script>
 </body>
 </html>
